@@ -1,11 +1,11 @@
 import { AsyncStorage } from 'react-native'
 
-const APP_STORAGE_KEY = 'MOBILE_FLASHCARDS';
+const APP_STORAGE_KEY = 'UDACI_CARDS';
 
 /**
  * Return all of the decks with their titles, questions, and answers included.
  */
-const getDecks = async () => {
+const getAllDecks = async () => {
     try{
         const decks = await AsyncStorage.getItem(APP_STORAGE_KEY);
         return JSON.parse(decks);
@@ -20,7 +20,7 @@ const getDecks = async () => {
  * Take in a single title argument and add it to the decks.
  * @param title
  */
-const saveDeckTitle = (title) => {
+const saveDeck = (title) => {
     return AsyncStorage.mergeItem(APP_STORAGE_KEY, JSON.stringify({
         [title]: {
             title,
@@ -54,5 +54,5 @@ const addCardToDeck = async(title, card) => {
 
 };
 
-export {getDecks, saveDeckTitle, addCardToDeck}
+export {getAllDecks, saveDeck, addCardToDeck}
 

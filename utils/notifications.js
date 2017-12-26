@@ -1,8 +1,8 @@
-import React from 'react';
-import { AsyncStorage } from 'react-native';
-import { Notifications, Permissions } from 'expo';
+import React from 'react'
+import { Notifications, Permissions } from 'expo'
+import { AsyncStorage } from 'react-native'
 
-const NOTIFICATION_KEY = 'FLASH_CARDS_NOTIFICATIONS';
+const NOTIFICATION_KEY = 'UDACI_CARDS_NOTIFICATIONS'
 
 export function clearLocalNotification () {
     return AsyncStorage.removeItem(NOTIFICATION_KEY)
@@ -11,7 +11,7 @@ export function clearLocalNotification () {
 
 export const createNotification = () => {
     return {
-        title: 'Quiz',
+        title: 'Udaci Cards',
         body: "Don't forget to study today!",
         ios: {
             sound: true,
@@ -23,7 +23,7 @@ export const createNotification = () => {
             vibrate: true,
         }
     }
-};
+}
 
 export function setLocalNotification(){
     AsyncStorage.getItem(NOTIFICATION_KEY)
@@ -33,12 +33,11 @@ export function setLocalNotification(){
                 Permissions.askAsync(Permissions.NOTIFICATIONS)
                     .then(({ status }) => {
                         if (status === 'granted') {
-                            Notifications.cancelAllScheduledNotificationsAsync();
-
-                            let tomorrow = new Date();
-                            tomorrow.setDate(tomorrow.getDate() + 1);
-                            tomorrow.setHours(20);
-                            tomorrow.setMinutes(0);
+                            Notifications.cancelAllScheduledNotificationsAsync()
+                            let tomorrow = new Date()
+                            tomorrow.setDate(tomorrow.getDate() + 1)
+                            tomorrow.setHours(20)
+                            tomorrow.setMinutes(0)
 
                             Notifications.scheduleLocalNotificationAsync(
                                 createNotification(),
@@ -46,7 +45,7 @@ export function setLocalNotification(){
                                     time: tomorrow,
                                     repeat: 'day',
                                 }
-                            );
+                            )
 
                             AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true))
                         }

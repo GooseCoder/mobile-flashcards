@@ -1,110 +1,102 @@
-import React, { Component } from 'react'
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { white, black} from '../utils/colors';
-import { connect } from "react-redux";
-import { resetQuiz } from "../actions/index";
-import { setLocalNotification,
-    clearLocalNotification } from '../utils/notifications';
+import React, {Component} from 'react'
+import {StyleSheet, Text, View, TouchableOpacity} from 'react-native'
+import {connect} from "react-redux"
+import {resetQuiz} from "../actions/index"
+import {white, black} from '../utils/colors'
+import {
+    setLocalNotification,
+    clearLocalNotification
+} from '../utils/notifications'
 
 resetNotification = () => {
     clearLocalNotification()
-        .then(setLocalNotification);
-};
+        .then(setLocalNotification)
+}
 
 class Deck extends Component {
-    static navigationOptions = ({ navigation }) => {
-        const { title } = navigation.state.params;
+    static navigationOptions = ({navigation}) => {
+        const {title} = navigation.state.params
         return {
             title
         }
-    };
+    }
 
     render() {
-        const { deck } = this.props;
-        const { navigate } = this.props.navigation;
-        const { resetQuiz } = this.props;
+        const {deck, resetQuiz} = this.props
+        const {navigate} = this.props.navigation
 
         return (
             <View style={styles.container}>
                 <View>
-                    <Text style={styles.largeText}>
-                        {deck.title}
-                    </Text>
-                    <Text style={styles.smallText}>
-                        {deck.questions ? deck.questions.length : ''} cards
-                    </Text>
+                    <Text style={styles.largeText}>{deck.title}</Text>
+                    <Text style={styles.smallText}>{deck.questions ? deck.questions.length : ''} cards</Text>
                 </View>
-
                 <View>
-                    <TouchableOpacity style={styles.outlineButton} onPress={() => navigate('AddCard',
-                        { deck })}>
-                        <Text style={styles.outlineButtonText}>
-                            Add Card
-                        </Text>
+                    <TouchableOpacity style={styles.outlineButton} onPress={() => navigate('AddCard', {deck})}>
+                        <Text style={styles.outlineButtonText}>Add Card</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.button} onPress={() => {
-                        resetQuiz(); resetNotification(); navigate('Quiz', { deck });
-                    }} >
-                        <Text style={styles.buttonText}>
-                            Start Quiz
-                        </Text>
+                        resetQuiz()
+                        resetNotification()
+                        navigate('Quiz', {deck})
+                    }}>
+                        <Text style={styles.buttonText}>Start Quiz</Text>
                     </TouchableOpacity>
                 </View>
-
             </View>
-        );
+        )
     }
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: '#ffffff',
         justifyContent: 'space-around',
-        alignItems: 'center',
-    },
-    buttonText: {
-        color: white,
-        fontSize: 22,
-        textAlign: 'center',
+        alignItems: 'center'
     },
     outlineButtonText: {
         color: black,
         fontSize: 22,
-        textAlign: 'center',
-    },
-    button: {
-        paddingHorizontal: 60,
-        paddingVertical: 20,
-        backgroundColor: black,
-        alignSelf: 'center',
-        borderRadius: 5,
-        marginVertical: 10,
+        textAlign: 'center'
     },
     outlineButton: {
-        paddingHorizontal: 60,
         paddingVertical: 20,
+        paddingHorizontal: 60,
         backgroundColor: white,
         alignSelf: 'center',
         borderRadius: 5,
         borderWidth: 1,
-        marginVertical: 10,
+        marginVertical: 10
+    },
+    buttonText: {
+        color: white,
+        fontSize: 22,
+        textAlign: 'center'
+    },
+    button: {
+        paddingVertical: 20,
+        paddingHorizontal: 60,
+        backgroundColor: black,
+        alignSelf: 'center',
+        borderRadius: 5,
+        marginVertical: 10
     },
     largeText: {
         fontSize: 30,
-        textAlign: 'center',
+        textAlign: 'center'
     },
     smallText: {
         fontSize: 20,
-        textAlign: 'center',
+        textAlign: 'center'
     }
-});
+})
 
 const mapStateToProps = ({decks}, ownProps) => {
-    const { title } = ownProps.navigation.state.params;
+    const {title} = ownProps.navigation.state.params
     return {
         deck: decks ? decks[title] : {}
     }
-};
+}
 
-export default connect(mapStateToProps, {resetQuiz})(Deck);
+export default connect(mapStateToProps, {resetQuiz})(Deck)

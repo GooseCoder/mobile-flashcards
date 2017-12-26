@@ -1,95 +1,99 @@
-import React, { Component } from 'react'
-import { StyleSheet, Text, TouchableOpacity, TextInput,
-         KeyboardAvoidingView, ToastAndroid } from 'react-native';
+import React, {Component} from 'react'
+import {connect} from "react-redux"
+import {
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    TextInput,
+    KeyboardAvoidingView,
+    ToastAndroid
+} from 'react-native'
+import {saveDeck} from '../utils/asyncStorageHandler'
 import {white, gray, black} from '../utils/colors'
-import { saveDeckTitle } from '../utils/storage';
-import { connect } from "react-redux";
-import { addDeck } from "../actions";
+import {addDeck} from "../actions"
 
 class AddDeck extends Component {
-    state = {deckInput: ''};
+    state = {deckInput: ''}
 
     createDeck = () => {
-        const {navigate} = this.props.navigation;
-        const {addDeck} = this.props;
-        const deckTitle = this.state.deckInput;
+        const {navigate} = this.props.navigation
+        const {addDeck} = this.props
+        const deckTitle = this.state.deckInput
 
-        if(!deckTitle){
-            ToastAndroid.showWithGravityAndOffset('Deck title can\'t be empty\nTry again!',
-                ToastAndroid.LONG, ToastAndroid.CENTER, 25, 50);
-            return;
+        if (!deckTitle) {
+            ToastAndroid.showWithGravityAndOffset('Deck title can\'t be empty\n Please try again!',
+                ToastAndroid.LONG, ToastAndroid.CENTER, 25, 50)
+            return
         }
 
-        saveDeckTitle(deckTitle).then(() => {
-            addDeck(deckTitle);
-            navigate('Deck', { title: deckTitle });
-            this.setState({deckInput: ''});
+        saveDeck(deckTitle).then(() => {
+            addDeck(deckTitle)
+            navigate('Deck', {title: deckTitle})
+            this.setState({deckInput: ''})
         }).catch(err => {
-            ToastAndroid.showWithGravityAndOffset('Error during saving: Deck is NOT saved!',
-                ToastAndroid.LONG, ToastAndroid.CENTER, 25, 50);
-            console.error(err);
-        });
-    };
+            ToastAndroid.showWithGravityAndOffset('Error during saving: Deck is not saved!',
+                ToastAndroid.LONG, ToastAndroid.CENTER, 25, 50)
+            console.error(err)
+        })
+    }
 
     render() {
         return (
-            <KeyboardAvoidingView behavior='padding' style={styles.container}>
+            <KeyboardAvoidingView style={styles.container} behavior='padding'>
                 <Text style={styles.titleText}>What is the title of your new deck?</Text>
-                <TextInput value={this.state.deckInput} style={styles.textInput}
-                           autogrow={true}
+                <TextInput style={styles.textInput}
+                           value={this.state.deckInput}
                            onChangeText={deckInput => this.setState({deckInput})}
+                           autogrow={true}
                            underlineColorAndroid='transparent'
                            autoCorrect={false}
                 />
                 <TouchableOpacity style={styles.button} onPress={() => this.createDeck()}>
-                    <Text style={styles.buttonText}>
-                        Add Deck
-                    </Text>
+                    <Text style={styles.buttonText}>Add Deck</Text>
                 </TouchableOpacity>
             </KeyboardAvoidingView>
-        );
+        )
     }
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#fff',
         justifyContent: 'flex-start',
-        alignItems: 'stretch',
+        backgroundColor: '#fff',
+        flex: 1,
+        alignItems: 'stretch'
     },
     buttonText: {
-        color: white,
         fontSize: 25,
-        textAlign: 'center',
+        color: white,
+        textAlign: 'center'
     },
     button: {
         paddingHorizontal: 60,
         paddingVertical: 20,
-        backgroundColor: black,
         alignSelf: 'center',
+        backgroundColor: black,
         borderRadius: 5,
-        marginVertical: 10,
+        marginVertical: 10
+    },
+    textInput: {
+        fontSize: 20,
+        padding: 10,
+        marginVertical: 20,
+        marginHorizontal: 20,
+        borderWidth: 1,
+        borderRadius: 10
     },
     titleText: {
-        marginTop: 10,
-        fontSize: 35,
         color: gray,
-        textAlign: 'center',
+        fontSize: 35,
+        marginTop: 10,
+        textAlign: 'center'
     },
     smallText: {
         fontSize: 20,
-        textAlign: 'center',
-    },
-    textInput:{
-        fontSize: 20,
-        marginHorizontal: 20,
-        marginVertical: 20,
-        padding: 10,
-        borderWidth: 1,
-        borderRadius: 10
-
+        textAlign: 'center'
     }
-});
+})
 
-export default connect(null, {addDeck})(AddDeck);
+export default connect(null, {addDeck})(AddDeck)

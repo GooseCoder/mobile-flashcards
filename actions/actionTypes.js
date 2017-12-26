@@ -1,0 +1,5 @@
+export const NEXT_CARD = 'NEXT_CARD'
+export const RESET_QUIZ = 'RESET_QUIZ'
+export const INIT_DECKS = 'INIT_DECKS'
+export const ADD_DECK = 'ADD_DECK'
+export const ADD_CARD = 'ADD_CARD'

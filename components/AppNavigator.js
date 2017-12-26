@@ -1,25 +1,25 @@
-import {black, blue, white} from "../utils/colors";
-import {StackNavigator, TabNavigator} from "react-navigation";
-import Deck from "./Deck";
-import AddDeck from "./AddDeck";
-import Quiz from "./Quiz";
-import AddCard from "./AddCard";
-import {Platform} from "react-native";
-import DeckList from "./DeckList";
+import {StackNavigator, TabNavigator} from "react-navigation"
+import {Platform} from "react-native"
+import Deck from "./Deck"
+import Quiz from "./Quiz"
+import AddDeck from "./AddDeck"
+import AddCard from "./AddCard"
+import DeckList from "./DeckList"
+import {black, blue, white} from "../utils/colors"
 
-const TabNav = TabNavigator({
+const Tabs = TabNavigator({
         Decks: {
             screen: DeckList,
             navigationOptions: {
                 tabBarLabel: 'Decks',
-                tabBarIcon: ({ tintColor }) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />
+                tabBarIcon: ({tintColor}) => <Ionicons name='ios-bookmarks' size={30} color={tintColor}/>
             },
         },
         AddDeck: {
             screen: AddDeck,
             navigationOptions: {
                 tabBarLabel: 'New Deck',
-                tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
+                tabBarIcon: ({tintColor}) => <FontAwesome name='plus-square' size={30} color={tintColor}/>
             },
         },
     },
@@ -29,39 +29,38 @@ const TabNav = TabNavigator({
         },
         tabBarOptions: {
             activeTintColor: Platform.OS === 'ios' ? blue : white,
+            labelStyle: {
+                fontSize: 20
+            },
             style: {
                 height: 56,
                 backgroundColor: Platform.OS === 'ios' ? white : black,
-                shadowColor: 'rgba(0, 0, 0, 0.24)',
                 shadowOffset: {
                     width: 0,
                     height: 3
                 },
+                shadowColor: 'rgba(0, 0, 0, 0.24)',
                 shadowRadius: 6,
                 shadowOpacity: 1
-            },
-            labelStyle: {
-                fontSize: 20
             }
         }
     }
-);
+)
 
 export const AppNavigator = StackNavigator({
     Decks: {
-        screen: TabNav,
+        screen: Tabs,
         navigationOptions: {
             header: null
         },
     },
-
     Deck: {
         screen: Deck,
         navigationOptions: {
-            headerTintColor: white,
             headerStyle: {
                 backgroundColor: black,
-            }
+            },
+            headerTintColor: white
         }
     },
 
@@ -69,10 +68,10 @@ export const AppNavigator = StackNavigator({
         screen: AddCard,
         navigationOptions: {
             title: 'Add Card',
-            headerTintColor: white,
             headerStyle: {
                 backgroundColor: black
-            }
+            },
+            headerTintColor: white
         }
     },
 
@@ -80,10 +79,10 @@ export const AppNavigator = StackNavigator({
         screen: Quiz,
         navigationOptions: {
             title: 'Quiz',
-            headerTintColor: white,
             headerStyle: {
                 backgroundColor: black,
-            }
+            },
+            headerTintColor: white
         }
     }
-});
+})
