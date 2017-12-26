@@ -3,7 +3,7 @@
 #### By Gustavo Adolfo Cruz Laura
 
 #### Getting Started:
-1. Clone the project: `$ https://github.com//mobile-flashcards.git`
+1. Clone the project: `$ git clone git@github.com:GooseCoder/mobile-flashcards.git`
 
 2. Go to `mobile-flashcards` directory: `$ cd mobile-flashcards`
 
